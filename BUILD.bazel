@@ -22,5 +22,6 @@ py_binary(
         requirement("submitit"),
         requirement("termcolor"),
         requirement("numpy"),
+        requirement("pillow"),
     ],
 )
