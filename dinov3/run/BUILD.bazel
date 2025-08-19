@@ -1,4 +1,5 @@
 load("@rules_python//python:defs.bzl", "py_binary")
+load("@rules_python//python:defs.bzl", "py_library")
 py_binary(
     name = "submit",
     srcs = [
@@ -10,7 +11,7 @@ py_binary(
     ],
     visibility = ["//visibility:public"],
 )
-py_binary(
+py_library(
     name = "init",
     srcs = [
         "init.py",
