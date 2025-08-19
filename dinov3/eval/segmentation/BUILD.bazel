@@ -13,8 +13,6 @@ py_library(
         "models/utils/ms_deform_attn.py",
         "models/utils/position_encoding.py",
         "models/utils/transformer.py",
-        "models/utils/ops/setup.py",
-        "models/utils/ops/test.py",
     ],
     deps = [
         requirement("torch"),
