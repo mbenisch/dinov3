@@ -1,0 +1,16 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "metrics",
+    srcs = [
+        "__init__.py",
+        "classification.py",
+        "imagenet_c.py",
+    ],
+    deps = [
+        requirement("torch"),
+        requirement("numpy"),
+        requirement("torchmetrics"),
+     ],
+    visibility = ["//visibility:public"],
+ )

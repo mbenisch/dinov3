@@ -1,0 +1,27 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "detection",
+    srcs = [
+        "config.py",
+        "models/__init__.py",
+        "models/backbone.py",
+        "models/detr.py",
+        "models/global_ape_decoder.py",
+        "models/global_rpe_decomp_decoder.py",
+        "models/position_encoding.py",
+        "models/transformer_encoder.py",
+        "models/transformer.py",
+        "models/utils.py",
+        "models/windows.py",
+        "util/__init__.py",
+        "util/box_ops.py",
+        "util/misc.py",
+    ],
+    deps = [
+        requirement("torch"),
+        requirement("torchvision"),
+        requirement("numpy"),
+     ],
+    visibility = ["//visibility:public"],
+ )

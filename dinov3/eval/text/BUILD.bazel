@@ -1,0 +1,34 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "text",
+    srcs = [
+        "ac_comp_parallelize.py",
+        "build_dinotxt.py",
+        "clip_loss.py",
+        "dinotxt_model.py",
+        "gram_loss.py",
+        "text_tower.py",
+        "text_transformer.py",
+        "tokenizer.py",
+    ],
+    data = [
+        "configs/dinov3_vitl_text.yaml",
+        "configs/text_backbone.yaml",
+    ],
+    deps = [
+        requirement("torch"),
+        requirement("omegaconf"),
+        "//dinov3/distributed:distributed",
+        "//dinov3/checkpointer:checkpointer",
+        "//dinov3/data:data",
+        "//dinov3/layers:layers",
+        "//dinov3/thirdparty/CLIP/clip:clip",
+        "//dinov3/configs:configs",
+        "//dinov3/logging:logging",
+        "//dinov3/train:train",
+        "//dinov3/models:models",
+        "//dinov3/utils:utils",
+     ],
+    visibility = ["//visibility:public"],
+ )
