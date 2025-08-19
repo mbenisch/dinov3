@@ -1,0 +1,25 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "layers",
+    srcs = [
+        "__init__.py",
+        "attention.py",
+        "block.py",
+        "dino_head.py",
+        "ffn_layers.py",
+        "fp8_linear.py",
+        "layer_scale.py",
+        "patch_embed.py",
+        "rms_norm.py",
+        "rope_position_encoding.py",
+        "sparse_linear.py",
+    ],
+    deps = [
+        requirement("torch"),
+        requirement("numpy"),
+        requirement("xformers"),
+        "//dinov3/utils:utils",
+     ],
+    visibility = ["//visibility:public"],
+ )
