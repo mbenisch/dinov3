@@ -25,5 +25,6 @@ py_binary(
         requirement("pillow"),
         requirement("pandas"),
         requirement("openpyxl"),
+        requirement("pyyaml"),
     ],
 )
