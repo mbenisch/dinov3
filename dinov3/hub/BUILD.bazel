@@ -32,6 +32,7 @@ py_library(
         "//dinov3/eval/dense/depth:depth",
         "//dinov3/eval/detection:detection",
         "//dinov3/eval/segmentation:segmentation",
+        "//dinov3/eval/text:text",
      ],
     visibility = ["//visibility:public"],
  )
