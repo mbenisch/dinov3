@@ -10,3 +10,4 @@ torchvision
 numpy
 pillow
 pandas
+openpyxl

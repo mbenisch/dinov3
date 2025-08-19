@@ -23,5 +23,7 @@ py_binary(
         requirement("termcolor"),
         requirement("numpy"),
         requirement("pillow"),
+        requirement("pandas"),
+        requirement("openpyxl"),
     ],
 )
