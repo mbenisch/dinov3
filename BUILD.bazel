@@ -27,5 +27,7 @@ py_binary(
         requirement("openpyxl"),
         requirement("pyyaml"),
         requirement("xformers"),
+        requirement("matplotlib"),
+        requirement("tqdm"),
     ],
 )

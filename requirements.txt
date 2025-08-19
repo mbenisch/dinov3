@@ -13,3 +13,5 @@ pandas
 openpyxl
 pyyaml
 xformers
+matplotlib
+tqdm
