@@ -1,0 +1,32 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "configs",
+    srcs = [
+        "__init__.py",
+        "config.py",
+    ],
+    data = [":config_yamls"],
+    deps = [
+        requirement("torch"),
+        requirement("omegaconf"),
+        "//dinov3/distributed:distributed",
+        "//dinov3/logging:logging",
+        "//dinov3/utils:utils",
+    ],
+    visibility = ["//visibility:public"],
+)
+filegroup(
+    name = "config_yamls",
+    srcs = [
+        "ssl_default_config.yaml",
+        "train/dinov3_vit7b16_gram_anchor.yaml",
+        "train/dinov3_vit7b16_high_res_adapt.yaml",
+        "train/dinov3_vit7b16_pretrain.yaml",
+        "train/dinov3_vitl16_lvd1689m_distilled.yaml",
+        "train/multi_distillation_test.yaml",
+        "train/vitl_im1k_lin834.yaml",
+        "train/multidist_tests/vitb_p16.yaml",
+        "train/multidist_tests/vits_p16.yaml",
+    ],
+)

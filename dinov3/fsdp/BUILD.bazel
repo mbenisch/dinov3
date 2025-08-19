@@ -1,0 +1,13 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "fsdp",
+    srcs = [
+        "ac_compile_parallelize.py",
+    ],
+    deps = [
+         "//dinov3/utils:utils",
+         requirement("torch"),
+    ],
+    visibility = ["//visibility:public"],
+ )

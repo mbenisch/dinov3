@@ -1,0 +1,17 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "loss",
+    srcs = [
+        "__init__.py",
+        "dino_clstoken_loss.py",
+        "gram_loss.py",
+        "ibot_patch_loss.py",
+        "koleo_loss.py",
+    ],
+    deps = [
+        requirement("torch"),
+        "//dinov3/distributed:distributed",
+     ],
+    visibility = ["//visibility:public"],
+ )

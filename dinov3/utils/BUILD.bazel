@@ -1,0 +1,17 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "utils",
+    srcs = [
+        "__init__.py",
+        "cluster.py",
+        "custom_callable.py",
+        "dtype.py",
+        "utils.py",
+    ],
+    deps = [
+        requirement("torch"),
+        requirement("numpy"),
+     ],
+    visibility = ["//visibility:public"],
+ )

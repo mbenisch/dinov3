@@ -1,0 +1,22 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+py_binary(
+    name = "submit",
+    srcs = [
+        "submit.py",
+    ],
+    deps = [
+        "//dinov3/logging:logging",
+        "//dinov3/utils:utils",
+    ],
+    visibility = ["//visibility:public"],
+)
+py_binary(
+    name = "init",
+    srcs = [
+        "init.py",
+    ],
+    deps = [
+        "//dinov3/configs:configs",
+    ],
+    visibility = ["//visibility:public"],
+)
