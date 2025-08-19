@@ -11,6 +11,7 @@ py_library(
         "text_tower.py",
         "text_transformer.py",
         "tokenizer.py",
+        "vision_tower.py",
     ],
     data = [
         "configs/dinov3_vitl_text.yaml",
