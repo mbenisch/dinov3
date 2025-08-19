@@ -1,0 +1,24 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "data",
+    srcs = [
+        "__init__.py",
+        "adapters.py",
+        "augmentations.py",
+        "collate.py",
+        "loaders.py",
+        "masking.py",
+        "meta_loaders.py",
+        "samplers.py",
+        "transforms.py",
+    ],
+    deps = [
+        requirement("torch"),
+        requirement("torchvision"),
+        requirement("numpy"),
+        requirement("pillow"),
+        "//dinov3/distributed:distributed",
+    ],
+    visibility = ["//visibility:public"],
+)

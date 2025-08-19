@@ -1,0 +1,20 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "datasets",
+    srcs = [
+        "__init__.py",
+        "ade20k.py",
+        "coco_captions.py",
+        "decoders.py",
+        "extended.py",
+        "image_net_22k.py",
+        "image_net.py",
+    ],
+    deps = [
+        requirement("torchvision"),
+        requirement("numpy"),
+        requirement("pillow"),
+    ],
+    visibility = ["//visibility:public"],
+)
