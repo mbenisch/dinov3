@@ -1,0 +1,30 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "train",
+    srcs = [
+        "__init__.py",
+        "cosine_lr_scheduler.py",
+        "multidist_meta_arch.py",
+        "param_groups.py",
+        "ssl_meta_arch.py",
+        "train.py",
+    ],
+    deps = [
+        requirement("torch"),
+        requirement("torchvision"),
+        requirement("numpy"),
+        requirement("omegaconf"),
+        "//dinov3/distributed:distributed",
+        "//dinov3/checkpointer:checkpointer",
+        "//dinov3/configs:configs",
+        "//dinov3/data:data",
+        "//dinov3/layers:layers",
+        "//dinov3/fsdp:fsdp",
+        "//dinov3/utils:utils",
+        "//dinov3/models:models",
+        "//dinov3/loss:loss",
+        "//dinov3/logging:logging",
+     ],
+    visibility = ["//visibility:public"],
+ )
