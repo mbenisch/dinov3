@@ -1,0 +1,19 @@
+load("@rules_python//python:defs.bzl", "py_binary")
+load("@pip//:requirements.bzl", "requirement")
+py_binary(
+    name = "dense_sparse_matching_test",
+    srcs = [
+        "dense_sparse_matching_test.py",
+    ],
+    deps = [
+        "//dinov3/logging:logging",
+        "//dinov3/utils:utils",
+        "//dinov3/models:models",
+        requirement("torch"),
+        requirement("torchvision"),
+        requirement("numpy"),
+        requirement("tqdm"),
+        requirement("matplotlib"),
+        requirement("scikit-learn"),
+    ],
+)
