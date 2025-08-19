@@ -154,6 +154,7 @@ numpy==1.26.4 \
     #   scipy
     #   torchmetrics
     #   torchvision
+    #   xformers
 omegaconf==2.3.0 \
     --hash=sha256:7b4df175cdb08ba400f45cae3bdcae7ba8365db4d165fc65fd04b050ab63b46b \
     --hash=sha256:d5d4b6d29955cc50ad50c46dc269bcd92c6e00f5f90d23ab5fee7bfca4ba4cc7
@@ -575,6 +576,7 @@ torch==2.7.0 \
     #   -r requirements.txt
     #   torchmetrics
     #   torchvision
+    #   xformers
 torchmetrics==1.8.1 \
     --hash=sha256:04ca021105871637c5d34d0a286b3ab665a1e3d2b395e561f14188a96e862fdb \
     --hash=sha256:2437501351e0da3d294c71210ce8139b9c762b5e20604f7a051a725443db8f4b
@@ -620,6 +622,11 @@ wcwidth==0.2.13 \
     --hash=sha256:3da69048e4540d84af32131829ff948f1e022c1c6bdb8d6102117aac784f6859 \
     --hash=sha256:72ea0c06399eb286d978fdedb6923a9eb47e1c486ce63e9b4e64fc18303972b5
     # via ftfy
+xformers==0.0.31.post1 \
+    --hash=sha256:06a12031a00aadd56fbe543a73258b18064bccdf85fbf5de4c3e67c69e301505 \
+    --hash=sha256:294c30125442f5a84964e5b87b3cd5e83b87053896a13bbfee17c0043ee66e62 \
+    --hash=sha256:81ecbcaf6253f61378189bd1cc3a1e2ff994d3ecb391fe098ef88834c6ff6358
+    # via -r requirements.txt
 
 # The following packages are considered to be unsafe in a requirements file:
 setuptools==80.8.0 \

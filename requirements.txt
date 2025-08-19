@@ -12,3 +12,4 @@ pillow
 pandas
 openpyxl
 pyyaml
+xformers

@@ -26,5 +26,6 @@ py_binary(
         requirement("pandas"),
         requirement("openpyxl"),
         requirement("pyyaml"),
+        requirement("xformers"),
     ],
 )
