@@ -1,0 +1,37 @@
+load("@rules_python//python:defs.bzl", "py_library")
+load("@pip//:requirements.bzl", "requirement")
+py_library(
+    name = "hub",
+    srcs = [
+        "backbones.py",
+        "classifiers.py",
+        "depthers.py",
+        "detectors.py",
+        "dinotxt.py",
+        "segmentors.py",
+        "utils.py",
+    ],
+    deps = [
+        requirement("torch"),
+        requirement("torchvision"),
+        requirement("numpy"),
+        requirement("omegaconf"),
+        requirement("scikit-learn"),
+        requirement("pandas"),
+        requirement("openpyxl"),
+        requirement("pyyaml"),
+        requirement("torchmetrics"),
+        "//dinov3/distributed:distributed",
+        "//dinov3/data:data",
+        "//dinov3/run:init",
+        "//dinov3/logging:logging",
+        "//dinov3/checkpointer:checkpointer",
+        "//dinov3/utils:utils",
+        "//dinov3/configs:configs",
+        "//dinov3/models:models",
+        "//dinov3/eval/dense/depth:depth",
+        "//dinov3/eval/detection:detection",
+        "//dinov3/eval/segmentation:segmentation",
+     ],
+    visibility = ["//visibility:public"],
+ )
