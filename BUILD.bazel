@@ -1,0 +1,26 @@
+load("@rules_python//python:pip.bzl", "compile_pip_requirements")
+load("@rules_python//python:defs.bzl", "py_binary")
+load("@pip//:requirements.bzl", "requirement")
+
+compile_pip_requirements(
+    name = "requirements",
+    src = "requirements.txt",
+    requirements_txt = "requirements_lock.txt"
+)
+
+py_binary(
+    name = "vscode_import_generator",
+    srcs = ["vscode_import_generator.py"],
+    deps = [
+        requirement("torch"),
+        requirement("torchvision"),
+        requirement("torchmetrics"),
+        requirement("ftfy"),
+        requirement("omegaconf"),
+        requirement("regex"),
+        requirement("scikit-learn"),
+        requirement("submitit"),
+        requirement("termcolor"),
+        requirement("numpy"),
+    ],
+)
