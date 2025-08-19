@@ -17,3 +17,17 @@ py_binary(
         requirement("scikit-learn"),
     ],
 )
+py_binary(
+    name = "dinotxt_inference_test",
+    srcs = [
+        "dinotxt_inference_test.py",
+    ],
+    deps = [
+        "//dinov3/hub:hub",
+        "//dinov3/data:data",
+        "//dinov3/data/datasets:datasets",
+        requirement("torch"),
+        requirement("pillow"),
+        requirement("matplotlib"),
+    ],
+)
