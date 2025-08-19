@@ -9,3 +9,4 @@ torchmetrics
 torchvision
 numpy
 pillow
+pandas
