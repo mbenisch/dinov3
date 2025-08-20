@@ -1,11 +1,13 @@
 import pickle
+import typing
 import os
-import urllib
+from urllib.request import urlopen
 
 import numpy as np
 from matplotlib.patches import ConnectionPatch
 import matplotlib.pyplot as plt
 from PIL import Image
+from PIL.Image import Image as PILImage
 from sklearn.decomposition import PCA
 
 import torch
@@ -55,8 +57,8 @@ mask_left_uri = "https://dl.fbaipublicfiles.com/dinov3/notebooks/dense_sparse_ma
 image_right_uri = "https://dl.fbaipublicfiles.com/dinov3/notebooks/dense_sparse_matching/image_right.jpg"
 mask_right_uri = "https://dl.fbaipublicfiles.com/dinov3/notebooks/dense_sparse_matching/image_right_fg.png"
 
-def load_image_from_url(url: str) -> Image:
-    with urllib.request.urlopen(url) as f:
+def load_image_from_url(url: str) -> PILImage:
+    with urlopen(url) as f:
         return Image.open(f)
 
 
@@ -95,17 +97,18 @@ patch_quant_filter.weight.data.fill_(1.0 / (PATCH_SIZE * PATCH_SIZE))
 
 # image resize transform to dimensions divisible by patch size
 def resize_transform(
-    mask_image: Image,
+    mask_image: PILImage,
     image_size: int = IMAGE_SIZE,
     patch_size: int = PATCH_SIZE,
 ) -> torch.Tensor:
     w, h = mask_image.size
     h_patches = int(image_size / patch_size)
     w_patches = int((w * image_size) / (h * patch_size))
-    return TF.to_tensor(TF.resize(mask_image, (h_patches * patch_size, w_patches * patch_size)))
+    resized = mask_image.resize((w_patches * patch_size, h_patches * patch_size), resample=Image.Resampling.BILINEAR)
+    return TF.to_tensor(resized)
 
-IMAGENET_MEAN = (0.485, 0.456, 0.406)
-IMAGENET_STD = (0.229, 0.224, 0.225)
+IMAGENET_MEAN = [0.485, 0.456, 0.406]
+IMAGENET_STD = [0.229, 0.224, 0.225]
 
 MODEL_TO_NUM_LAYERS = {
     MODEL_DINOV3_VITS: 12,
