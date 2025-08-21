@@ -97,14 +97,14 @@ patch_quant_filter.weight.data.fill_(1.0 / (PATCH_SIZE * PATCH_SIZE))
 
 # image resize transform to dimensions divisible by patch size
 def resize_transform(
-    mask_image: PILImage,
+    image: PILImage,
     image_size: int = IMAGE_SIZE,
     patch_size: int = PATCH_SIZE,
 ) -> torch.Tensor:
-    w, h = mask_image.size
+    w, h = image.size
     h_patches = int(image_size / patch_size)
     w_patches = int((w * image_size) / (h * patch_size))
-    resized = mask_image.resize((w_patches * patch_size, h_patches * patch_size), resample=Image.Resampling.BILINEAR)
+    resized = image.resize((w_patches * patch_size, h_patches * patch_size), resample=Image.Resampling.BILINEAR)
     return TF.to_tensor(resized)
 
 IMAGENET_MEAN = [0.485, 0.456, 0.406]
