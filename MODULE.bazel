@@ -1,4 +1,4 @@
-"""Bazel module configuration for the Waymo E2E Challenge.
+"""Bazel module configuration for the DINOv3 model from FBAI
 
 Defines external dependencies and configures the Python toolchain and pip
 requirements used by the workspace.
