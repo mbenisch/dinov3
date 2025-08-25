@@ -16,6 +16,7 @@ import torchvision.transforms.functional as TF
 from tqdm import tqdm
 
 from dinov3.models.vision_transformer import vit_large
+from typing import Tuple, cast
 
 DINOV3_GITHUB_LOCATION = "facebookresearch/dinov3"
 
@@ -139,12 +140,15 @@ with torch.inference_mode():
             image_resized = TF.normalize(image_resized, mean=IMAGENET_MEAN, std=IMAGENET_STD)
             image_resized = image_resized.unsqueeze(0)
 
-            feats = model.get_intermediate_layers(image_resized, n=range(n_layers), reshape=True, norm=True)
-            dim = feats[-1].shape[1]
-            #patch_features.append(feats[-1].squeeze().view(dim, -1).permute(1,0).detach().cpu())
-            patch_features.append(feats[-1].squeeze().detach().cpu())
+            features = model.get_intermediate_layers(image_resized, n=range(n_layers), reshape=True, norm=True)
+            last_feature = cast(torch.Tensor, features[-1])
+            #patch_features.append(last_feat.squeeze().view(dim, -1).permute(1,0).detach().cpu())
+            patch_features.append(last_feature.squeeze().detach().cpu())
 
 MASK_FG_THRESHOLD = 0.5
+
+# feature dimension (channels) of last layer features
+dim = int(patch_features[0].shape[0])
 
 patch_features[0] = F.normalize(patch_features[0], p=2, dim=0)
 patch_features[1] = F.normalize(patch_features[1], p=2, dim=0)
@@ -242,7 +246,7 @@ def compute_distances_l2(X, Y, X_squared_norm, Y_squared_norm):
     return distances
 
 
-def stratify_points(pts_2d: torch.Tensor, threshold: float = 100.0) -> torch.Tensor:
+def stratify_points(pts_2d: torch.Tensor, threshold: float = 100.0) -> Tuple[np.ndarray, np.ndarray]:
     # pts_2d: [N, 2]
     n = len(pts_2d)
     max_value = threshold + 1
@@ -250,13 +254,13 @@ def stratify_points(pts_2d: torch.Tensor, threshold: float = 100.0) -> torch.Ten
     pts_2d_sq_norms.square_()
     distances = compute_distances_l2(pts_2d, pts_2d, pts_2d_sq_norms, pts_2d_sq_norms)
     distances.fill_diagonal_(max_value)
-    distances_mask = torch.empty((n, n), dtype=pts_2d.dtype, device=pts_2d.device)
+    distances_mask = torch.empty((int(n), int(n)), dtype=pts_2d.dtype, device=pts_2d.device)
     torch.le(distances, threshold, out=distances_mask)
     ones_vec = torch.ones(n, device=pts_2d.device, dtype=pts_2d.dtype)
     counts_vec = torch.mv(distances_mask, ones_vec)
     indices_mask = np.ones(n)
     while torch.any(counts_vec).item():
-        index_max = torch.argmax(counts_vec).item()
+        index_max = int(torch.argmax(counts_vec).item())
         indices_mask[index_max] = 0
         distances[index_max, :] = max_value
         distances[:, index_max] = max_value
@@ -270,8 +274,8 @@ print(f"Non-stratified points: {tuple(locs_2d_left_fg.shape)}")
 
 indices_to_exclude, indices_to_keep = stratify_points(locs_2d_left_fg * scale_left, STRATIFY_DISTANCE_THRESHOLD**2)
 
-sparse_points_left_yx = locs_2d_left_fg[indices_to_keep, :].cpu().numpy()
-sparse_points_right_yx = locs_2d_right_fg[indices_to_keep, :].cpu().numpy()
+sparse_points_left_yx = locs_2d_left_fg[indices_to_keep, :]
+sparse_points_right_yx = locs_2d_right_fg[indices_to_keep, :]
 
 print(f"Stratified points: {sparse_points_left_yx.shape}")
 
@@ -296,8 +300,8 @@ for i, (row_left, col_left), (row_right, col_right) in zip(
         int(col_left_orig / PATCH_SIZE)
     ].cpu().numpy()
     con = ConnectionPatch(
-        xyA=(col_left * scale_left, row_left * scale_left),
-        xyB=(col_right * scale_right, row_right * scale_right),
+        xyA=(col_left.item() * scale_left, row_left.item() * scale_left),
+        xyB=(col_right.item() * scale_right, row_right.item() * scale_right),
         coordsA="data",
         coordsB="data",
         axesA=ax1,
